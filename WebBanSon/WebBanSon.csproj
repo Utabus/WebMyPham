@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,10 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+
   <ItemGroup>
     <Folder Include="Areas\Admin\" />
     <Folder Include="UpLoads\Images\Product\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +29,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="UnidecodeSharpFork" Version="1.0.0" />
   </ItemGroup>
 

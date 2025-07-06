@@ -19,104 +19,105 @@
 }
 
 <style>
-   
-
     #chat-container {
-        width: 300px;
-        height: 400px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        width: 340px;
+        height: 480px;
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         display: none;
-        background-color: #ddd;
+        background: rgba(255,255,255,0.95);
+        border: none;
+        z-index: 1001;
+        transition: box-shadow 0.2s;
     }
-
+    #chat-container:focus-within {
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+    }
     #chat-header {
-        background-color: #4CAF50;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
         color: white;
-        padding: 15px;
-        text-align: center;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        position: relative;
+        padding: 16px 20px;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e0e0e0;
     }
-
     #close-button {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        cursor: pointer;
+        background: none;
+        border: none;
         color: white;
+        font-size: 20px;
+        cursor: pointer;
+        transition: color 0.2s;
     }
-
+    #close-button:hover {
+        color: #f44336;
+    }
     #chat-messages {
-        padding: 15px;
-        max-height: 300px;
+        padding: 18px 14px 10px 14px;
+        max-height: 340px;
         overflow-y: auto;
         display: flex;
-        flex-direction: column; /* Thay đổi hướng của flex container thành từ trên xuống */
+        flex-direction: column;
+        gap: 10px;
+        background: none;
     }
-
     .message {
         display: flex;
-        align-items: flex-start;
-        margin-bottom: 10px;
+        align-items: flex-end;
+        gap: 10px;
+        margin-bottom: 0;
     }
-
-    .user-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-        .user-avatar img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-    .user1 .user-avatar {
-        background-color: #4CAF50;
-    }
-
-    .user2 .user-avatar {
-        background-color: gold;
-    }
-
     .user1 {
         justify-content: flex-end;
     }
-
+    .user2 {
+        justify-content: flex-start;
+    }
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(33,147,176,0.12);
+        background: #e3f2fd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
     .message-content {
-        padding: 8px;
-        border-radius: 5px;
+        padding: 10px 16px;
+        border-radius: 16px;
         max-width: 70%;
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        word-wrap: break-word;
+        font-size: 15px;
+        background: #e3f2fd;
+        color: #222;
+        box-shadow: 0 1px 4px rgba(33,147,176,0.08);
+        word-break: break-word;
+        transition: background 0.2s;
     }
-
     .user1 .message-content {
-        background-color: #4CAF50;
-        color: white;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+        color: #fff;
         align-self: flex-end;
-        margin-right: 10px;
     }
-
     .user2 .message-content {
-        background-color: #f9f9f9;
-        color: #333;
+        background: #f1f1f1;
+        color: #222;
         align-self: flex-start;
     }
-
     #chat-input {
         position: absolute;
         bottom: 0;
@@ -124,106 +125,204 @@
         width: 100%;
         display: flex;
         align-items: center;
-        padding: 10px;
-        border-top: 1px solid #ddd;
-        background-color: #f9f9f9;
+        padding: 14px 12px;
+        border-top: 1px solid #e0e0e0;
+        background: #f8fafc;
+        gap: 10px;
     }
-
     #user-input {
         flex: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-right: 10px;
+        padding: 10px 14px;
+        border: 1px solid #b3e0fc;
+        border-radius: 16px;
         outline: none;
+        font-size: 15px;
+        background: #fff;
+        transition: border 0.2s;
     }
-
+    #user-input:focus {
+        border: 1.5px solid #2193b0;
+    }
     #send-button {
-        background-color: #4CAF50;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
         color: white;
-        padding: 8px;
         border: none;
-        border-radius: 5px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
         cursor: pointer;
+        box-shadow: 0 2px 8px rgba(33,147,176,0.12);
+        transition: background 0.2s;
     }
-
+    #send-button:hover {
+        background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+    }
     #toggle-button {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: limegreen; /* Màu xanh */
-        color: #fff; /* Màu chữ trắng */
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+        color: #fff;
         border: none;
-        border-radius: 100%;
-        padding: 15px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000; /* Đặt z-index cao để nút nổi lên trên các đối tượng khác */
-        outline: none; /* Loại bỏ đường viền khi được focus */
-        display: block;
+        box-shadow: 0 4px 16px rgba(33,147,176,0.18);
+        z-index: 1002;
+        outline: none;
+        transition: background 0.2s;
     }
+    #toggle-button:hover {
+        background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+    }.ai-modern-bubble .card {
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+/* Khung chat */
+#ai-chat-messages {
+    background: #f8f9fa;
+    padding: 20px 10px;
+    border-radius: 12px;
+    min-height: 300px;
+    max-height: 60vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* Bong bóng chat */
+.ai-modern-message {
+    display: flex;
+    margin-bottom: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.ai-modern-message.user {
+    justify-content: flex-end;
+}
+.ai-modern-message.ai {
+    justify-content: flex-start;
+}
+.ai-modern-bubble {
+    background: #fff;
+    border-radius: 16px;
+    padding: 14px 18px;
+    max-width: 80vw;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    font-size: 1rem;
+    color: #222;
+    line-height: 1.6;
+    word-break: break-word;
+}
+.ai-modern-message.user .ai-modern-bubble {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+.ai-modern-message.ai .ai-modern-bubble {
+    background: #f1f8e9;
+    color: #388e3c;
+}
+
+/* Card khách hàng */
+.card {
+    border-radius: 14px !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+}
+.card-body {
+    padding: 14px !important;
+}
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.badge {
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+
+/* Markdown style */
+.ai-modern-bubble h1, .ai-modern-bubble h2, .ai-modern-bubble h3 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: 700;
+}
+.ai-modern-bubble ul, .ai-modern-bubble ol {
+    margin: 0.5em 0 0.5em 1.5em;
+}
+.ai-modern-bubble pre, .ai-modern-bubble code {
+    background: #f5f5f5;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.95em;
+    color: #c7254e;
+}
+.ai-modern-bubble table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5em 0;
+}
+.ai-modern-bubble th, .ai-modern-bubble td {
+    border: 1px solid #e0e0e0;
+    padding: 6px 10px;
+    text-align: left;
+}
+.ai-modern-bubble th {
+    background: #f1f8e9;
+    font-weight: 600;
+}
+
 </style>
-<!-- Footer Start -->
-
-<!-- Footer End -->
-<!-- Back to Top -->
-<button style="display:none" href="#" id="toggle-button">
+<!-- Chat Toggle Button -->
+<button style="display:none" id="toggle-button">
     <i class="fas fa-comments"></i>
-
 </button>
-
+<!-- Chat Container -->
 <div id="chat-container">
     <div id="chat-header">
-        Chat Interface
-        <span id="close-button" onclick="toggleChat()">✖</span>
+        <span><i class="fas fa-comments"></i> Hỗ trợ trực tuyến</span>
+        <button id="close-button" onclick="toggleChat()">&times;</button>
     </div>
     <div id="chat-messages">
-        <div style="" class="message user1">
-
-            <div class="message-content">Hello there!</div>
-            <div class="user-avatar"><img src="@Avartar" /></div>
-        </div>
-        <div style="" class="message user2">
-
-            <div class="user-avatar"></div>
-            <div class="message-content">Hi! How can I help you?</div>
-        </div>
-
+        <!-- Tin nhắn sẽ được render ở đây bằng JS -->
     </div>
     <div id="chat-input">
         <input id="avatar" type="hidden" value="@Avartar" />
         <input id="Id" type="hidden" value="@Id" />
-
         <input id="IdAdmin" type="hidden" value="1" />
         <input id="avatarAdmin" type="hidden" value="@AvatarAdmin" />
-        <input type="text" id="user-input" placeholder="Nhập tin nhắn">
-        <button id="send-button" onclick="sendMessageAdmin()">Send</button>
+        <input type="text" id="user-input" placeholder="Nhập tin nhắn..." autocomplete="off">
+        <button id="send-button" onclick="sendMessageAdmin()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
         <input type="hidden" id="nameUser" value="@UserName" />
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 <script>
     const chatContainer = document.getElementById('chat-container');
     const toggleButton = document.getElementById('toggle-button');
-
     toggleButton.addEventListener('click', toggleChat);
-
     function displayChatMessages(messages) {
         var user1 = document.getElementById('Id').value;
         var avatarValue = document.getElementById('avatar').value;
         var avatarValue1 = document.getElementById('avatarAdmin').value;
         var chatMessagesContainer = $('#chat-messages');
-
-        // Clear existing messages
         chatMessagesContainer.empty();
-
-        // Iterate through messages and append them to the container
         messages.forEach(function (message) {
-            var messageDiv = $('<div>', { class: 'message', 'user': message.fromId });
-
+            var messageDiv = $('<div>', { class: 'message' });
             if (message.fromId == user1) {
                 messageDiv.addClass('user1');
                 messageDiv.append(
-
                     $('<div>', { class: 'message-content', text: message.messages }),
                     $('<div>', { class: 'user-avatar' }).append($('<img>', { src: avatarValue }))
                 );
@@ -233,24 +332,23 @@
                     $('<div>', { class: 'user-avatar' }).append($('<img>', { src: '/contents/Images/User/' + message.avatar })),
                     $('<div>', { class: 'message-content', text: message.messages }),
                     $('<input>', { id: 'avatarUser', type: 'hidden', value: message.avatar }),
-                    $('<input>', { id: 'touser', type: 'hidden', value: message.touser }) // or message.messages
+                    $('<input>', { id: 'touser', type: 'hidden', value: message.touser })
                 );
             }
             chatMessagesContainer.append(messageDiv);
         });
+        chatMessagesContainer.scrollTop(chatMessagesContainer[0].scrollHeight);
     }
     function toggleChat() {
-
         if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
             chatContainer.style.display = 'block';
-            
         } else {
             chatContainer.style.display = 'none';
         }
     }
     function toggleChat1(ToUser) {
         chatContainer.style.display = 'block';
-        var fromUser = 'Admin';  
+        var fromUser = 'Admin';
         $.ajax({
             url: '/Chat/GetChatData',
             type: 'GET',
@@ -268,9 +366,8 @@
             }
         });
     }
-
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.9/signalr.min.js"></script>
-
 <script src="~/js/chat.js"></script>
-<script src="~/lib/microsoft-signalr/signalr.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.js"></script><script src="~/js/site.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

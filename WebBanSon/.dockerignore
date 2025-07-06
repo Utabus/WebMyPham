@@ -1,0 +1,6 @@
+﻿*.md
+*.log
+*.user
+*.vs
+bin/
+obj/

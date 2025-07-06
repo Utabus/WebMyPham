@@ -1,0 +1,7 @@
+﻿@{
+    var errorCode = ViewData["ErrorCode"];
+    ViewData["Title"] = $"Lỗi {errorCode}";
+}
+
+<h1>Mã lỗi: @errorCode</h1>
+<p>Rất tiếc, có một lỗi xảy ra với mã trạng thái @errorCode.</p>

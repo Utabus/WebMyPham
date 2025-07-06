@@ -28,6 +28,33 @@
             background: none;
             padding: 0;
         }
+
+        .btn-metamask {
+            background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+            color: #222;
+            font-weight: 700;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(253,160,133,0.18);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .btn-metamask:hover, .btn-metamask:focus {
+            background: linear-gradient(90deg, #fda085 0%, #f6d365 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(253,160,133,0.28);
+            outline: none;
+        }
+        .btn-metamask i {
+            font-size: 1.3em;
+            color: #ff9900;
+        }
     </style>
 </head>
 <body>
@@ -164,9 +191,10 @@
                                     </li>
                                     <li class="d-flex justify-content-between py-3 border-bottom">
                                         <strong class="text-muted">Phương thức thanh toán:</strong>
-                                        <select class="form-control" name="Pay" placeholder="" required>
+                                        <select class="form-control" name="Pay" id="payMethod" required>
                                             <option value="1" selected> COD </option>
                                             <option value="2">VNPay</option>
+                                            <option value="3">Blockchain (ETH/MetaMask)</option>
                                         </select>
                                     </li>
                                     <li class="d-flex justify-content-between py-3 border-bottom">
@@ -194,6 +222,43 @@
                                        
                                     </li>
                                 </ul>
+                                <div id="blockchainPayBox" style="display:none; margin-top:16px;">
+                                    <div class="mb-2">
+                                        <label for="vndAmount"><b>Nhập số tiền (VNĐ):</b></label>
+                                        <input type="number" id="vndAmount" class="form-control" min="1000" placeholder="Nhập số tiền cần thanh toán">
+                                    </div>
+                                    <div id="ethEquivalent" class="mb-2 text-info" style="font-weight:500"></div>
+                                    <button type="button" id="payWithMetaMask" class="btn-metamask">
+                                        <span style="display:inline-block; width:28px; height:28px; margin-right:8px; vertical-align:middle;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 318.6 318.6" width="28" height="28">
+                                                <polygon fill="#E2761B" points="274.1,35.5 175.6,110.2 193.2,70.2"/>
+                                                <polygon fill="#E4761B" points="44.5,35.5 123.9,70.5 141.7,110.2"/>
+                                                <polygon fill="#D7C1B3" points="238.6,229.2 206.2,254.2 250.6,265.7 262.1,230.6"/>
+                                                <polygon fill="#D7C1B3" points="56.5,230.6 68,265.7 112.4,254.2 80,229.2"/>
+                                                <polygon fill="#EA8D1A" points="112.4,254.2 141.1,239.2 113.7,217.2"/>
+                                                <polygon fill="#EA8D1A" points="206.2,254.2 204.9,217.2 177.5,239.2"/>
+                                                <polygon fill="#F6CDB0" points="177.5,239.2 204.9,217.2 202.7,215.4 177.5,232.2"/>
+                                                <polygon fill="#F6CDB0" points="141.1,239.2 177.5,239.2 177.5,232.2 152.3,215.4"/>
+                                                <polygon fill="#D7C1B3" points="152.3,215.4 113.7,217.2 141.1,239.2"/>
+                                                <polygon fill="#D7C1B3" points="202.7,215.4 204.9,217.2 177.5,239.2"/>
+                                                <polygon fill="#763E1A" points="113.7,217.2 152.3,215.4 141.1,239.2"/>
+                                                <polygon fill="#763E1A" points="204.9,217.2 202.7,215.4 177.5,239.2"/>
+                                                <polygon fill="#F6CDB0" points="177.5,232.2 202.7,215.4 177.5,215.4"/>
+                                                <polygon fill="#F6CDB0" points="152.3,215.4 177.5,215.4 177.5,232.2"/>
+                                                <polygon fill="#763E1A" points="177.5,215.4 152.3,215.4 177.5,232.2"/>
+                                                <polygon fill="#763E1A" points="177.5,215.4 202.7,215.4 177.5,232.2"/>
+                                                <polygon fill="#763E1A" points="152.3,215.4 113.7,217.2 141.1,239.2"/>
+                                                <polygon fill="#763E1A" points="204.9,217.2 202.7,215.4 177.5,239.2"/>
+                                                <polygon fill="#763E1A" points="177.5,215.4 152.3,215.4 177.5,232.2"/>
+                                                <polygon fill="#763E1A" points="177.5,215.4 202.7,215.4 177.5,232.2"/>
+                                                <polygon fill="#763E1A" points="152.3,215.4 113.7,217.2 141.1,239.2"/>
+                                                <polygon fill="#763E1A" points="204.9,217.2 202.7,215.4 177.5,239.2"/>
+                                            </svg>
+                                        </span>
+                                        Thanh toán bằng MetaMask
+                                    </button>
+                                </div>
+                                <div id="blockchainNotify" style="margin-top:8px;"></div>
                                 <button type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Thanh toán</button>
                                 <a asp-action="RemoveCart" class="btn btn-dark rounded-pill py-2 btn-block btn-red">Xóa giỏ hàng</a>
                             </div>
@@ -203,6 +268,13 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+    <!-- Overlay loading khi thanh toán blockchain -->
+    <div id="blockchainLoading" style="display:none;position:fixed;z-index:2000;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:32px 36px;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.12);display:flex;flex-direction:column;align-items:center;gap:16px;min-width:260px;">
+            <div class="spinner-border text-warning" style="width:2.5rem;height:2.5rem;"></div>
+            <div style="font-size:1.15rem;font-weight:600;color:#f6a623;">Đang xử lý thanh toán Blockchain...<br>Vui lòng chờ xác nhận từ MetaMask!</div>
         </div>
     </div>
 </body>
@@ -250,98 +322,255 @@
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
+const recipient = "0xC5F470735Cb971E1DFBD62bC93855501842aDcF1";
+const sepoliaChainId = "0xaa36a7"; // ChainId của Sepolia
+let latestEthRate = null;
 
-    function getDiscount() {
-        var couponInput = document.getElementById("couponInput");
-        var couponValue = couponInput.value;
-        var code = couponValue;
+async function getEthVndRate() {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=vnd');
+    const data = await res.json();
+    return data.ethereum.vnd;
+}
 
-        $.ajax({
-            url: '/Order/GetDiscount',
-            type: 'GET',
-            data: { ma: code },
-            success: function (data) {
-                if (data) {
-                    $('#thongbao').text('ÁP MÃ THÀNH CÔNG').css({
-                        'color': 'green',
-                        'font-weight': 'bold'
-                    });
-
-                    var shippingFeeElement = document.getElementById('shippingFee');
-                    var magiamgia = document.getElementById('giamgia');
-                    var tongTienElement = document.getElementById('tongtien').value;
-                    var selectedShipperValue = document.getElementById('shipperSelect').value;
-                    var total = document.getElementById('thanhtoan');
-
-                    var tongTienValue = parseFloat(tongTienElement);
-                    var giamgia = data.discountPercent;
-                    var shippingFee = (selectedShipperValue === '1') ? 30000 : 45000;
-
-                    shippingFeeElement.innerText = formatCurrency(shippingFee) + ' VNĐ';
-                    shippingFeeElement.setAttribute('value', shippingFee);
-                    magiamgia.setAttribute('value', giamgia);
-
-                    var thanhtoan = tongTienValue - giamgia + shippingFee;
-
-                    $('#giamgia').text(formatCurrency(data.discountPercent) + ' VNĐ');
-                    $('#thanhtoan').text(formatCurrency(thanhtoan) + ' VNĐ');
-
-                   
-                } else {
-                    $('#thongbao').text('Mã giảm giá không tồn tại').css({
-                        'color': 'red',
-                        'font-weight': 'bold'
-                    });
-                }
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
-        });
-    };
-
-    function MoModal() {
-        $('#myModal').modal('show');
-    };
-    function DongModal() {
-        $('#myModal').modal('hide');
-    };
-    document.getElementById('shipperSelect').addEventListener('change', function () {
-        var shippingFeeElement = document.getElementById('shippingFee');
-        var tongTienElement = document.getElementById('tongtien').value;
-        var giamgiaElement = document.getElementById('giamgia');
-        var selectedShipperValue = this.value;
-        var total = document.getElementById('thanhtoan');
-
-        // Chuyển đổi giá trị của tongTienElement từ chuỗi sang số
-        var tongTienValue = parseFloat(tongTienElement);
-
-        // Lấy giá trị của giảm giá từ thuộc tính value của phần tử h5
-        var giamgiaValue = parseFloat(giamgiaElement.getAttribute('value'));
-
-        // Cập nhật giá trị phí vận chuyển dựa trên lựa chọn
-        var shippingFee = (selectedShipperValue === '1') ? 30000 : 45000;
-
-        // Cập nhật thuộc tính khác thay vì value
-        shippingFeeElement.setAttribute('value', shippingFee);
-
-        // Cập nhật text hiển thị
-        shippingFeeElement.innerText = formatCurrency(shippingFee) + ' VNĐ';
-
-        // Cập nhật giá trị ẩn
-        var tongtien = tongTienValue + shippingFee - giamgiaValue;
-        total.innerText = formatCurrency(tongtien) + ' VNĐ';
-
-      
-
-    });
-
-
-    // Hàm định dạng số tiền thành chuỗi có dấu phẩy
-    function formatCurrency(amount) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+async function updateEthEquivalent() {
+    const vndAmount = document.getElementById('vndAmount').value;
+    const ethDiv = document.getElementById('ethEquivalent');
+    if (!vndAmount || isNaN(vndAmount) || vndAmount <= 0) {
+        ethDiv.innerText = '';
+        return;
     }
+    try {
+        if (!latestEthRate) {
+            latestEthRate = await getEthVndRate();
+        }
+        const amountEth = (parseFloat(vndAmount) / latestEthRate).toFixed(6);
+        ethDiv.innerText = `Số lượng ETH sẽ thanh toán: ${amountEth} ETH`;
+    } catch {
+        ethDiv.innerText = 'Không lấy được tỷ giá ETH/VNĐ!';
+    }
+}
+
+document.getElementById('vndAmount').addEventListener('input', async function() {
+    latestEthRate = null;
+    await updateEthEquivalent();
+});
+
+// Ẩn/hiện box blockchain theo lựa chọn
+const submitBtn = document.querySelector('button[type="submit"]');
+document.getElementById('payMethod').addEventListener('change', function() {
+    const box = document.getElementById('blockchainPayBox');
+    if (this.value == "3") {
+        box.style.display = "block";
+        // Lấy số tiền thanh toán hiện tại (bỏ ký tự, lấy số)
+        const thanhtoanText = document.getElementById('thanhtoan').innerText;
+        const vnd = parseInt(thanhtoanText.replace(/[^\d]/g, ''));
+        document.getElementById('vndAmount').value = vnd;
+        latestEthRate = null;
+        updateEthEquivalent();
+        document.getElementById('vndAmount').readOnly = true; // Không cho sửa tay
+        if(submitBtn) submitBtn.disabled = true;
+    } else {
+        box.style.display = "none";
+        if(submitBtn) submitBtn.disabled = false;
+    }
+});
+
+// Hiển thị thông báo đẹp
+function showBlockchainNotify(msg, type) {
+    const notify = document.getElementById('blockchainNotify');
+    notify.innerHTML = `<div style="padding:10px 16px;border-radius:10px;font-weight:500;${type==='success'?'background:#e6ffed;color:#1a7f37;border:1px solid #b7eb8f;':'background:#fff1f0;color:#cf1322;border:1px solid #ffa39e;'};margin-bottom:4px;">${msg}</div>`;
+    setTimeout(()=>{ notify.innerHTML = ''; }, 5000);
+}
+
+function showBlockchainLoading(show) {
+    document.getElementById('blockchainLoading').style.display = show ? 'flex' : 'none';
+}
+
+document.getElementById('payWithMetaMask').onclick = async function () {
+    // Kiểm tra đã chọn địa chỉ giao hàng chưa
+    const addressSelect = document.querySelector('select[name="Address"]');
+    if (!addressSelect || !addressSelect.value) {
+        showBlockchainNotify('Vui lòng chọn địa chỉ giao hàng trước khi thanh toán bằng MetaMask!', 'error');
+        return;
+    }
+    const vndAmount = document.getElementById('vndAmount').value;
+    if (!vndAmount || isNaN(vndAmount) || vndAmount <= 0) {
+        showBlockchainNotify('Số tiền thanh toán không hợp lệ!', 'error');
+        return;
+    }
+    if (typeof window.ethereum === 'undefined') {
+        showBlockchainNotify('Vui lòng cài đặt MetaMask!', 'error');
+        return;
+    }
+    latestEthRate = null;
+    let ethRate;
+    try {
+        ethRate = await getEthVndRate();
+    } catch (e) {
+        showBlockchainNotify('Không lấy được tỷ giá ETH/VNĐ!', 'error');
+        return;
+    }
+    const amountEth = (parseFloat(vndAmount) / ethRate).toFixed(6);
+    // Chuyển mạng sang Sepolia nếu cần
+    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (currentChainId !== sepoliaChainId) {
+        try {
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: sepoliaChainId }]
+            });
+        } catch (switchError) {
+            if (switchError.code === 4902) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: sepoliaChainId,
+                            chainName: 'Sepolia Test Network',
+                            rpcUrls: ['https://rpc.sepolia.org'],
+                            nativeCurrency: { name: 'SepoliaETH', symbol: 'ETH', decimals: 18 },
+                            blockExplorerUrls: ['https://sepolia.etherscan.io']
+                        }]
+                    });
+                } catch (addError) {
+                    showBlockchainNotify('Không thể thêm mạng Sepolia vào MetaMask: ' + addError.message, 'error');
+                    return;
+                }
+            } else {
+                showBlockchainNotify('Vui lòng chuyển mạng MetaMask sang Sepolia!', 'error');
+                return;
+            }
+        }
+    }
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    try {
+        showBlockchainLoading(true);
+        const tx = await signer.sendTransaction({
+            to: recipient,
+            value: ethers.utils.parseEther(amountEth)
+        });
+        showBlockchainNotify(`Đang gửi ${amountEth} ETH (tương đương ${vndAmount} VNĐ), vui lòng xác nhận trên MetaMask!`, 'success');
+        await tx.wait();
+        showBlockchainNotify('Thanh toán thành công!', 'success');
+        // Submit form sau khi thanh toán thành công
+        setTimeout(function() {
+            showBlockchainLoading(false);
+            // Submit đúng form checkout
+            var metaBtn = document.getElementById('payWithMetaMask');
+            var form = metaBtn.closest('form');
+            if(form) form.submit();
+            else {
+                var fallbackForm = document.querySelector('form[asp-action="CheckOut"]');
+                if(fallbackForm) fallbackForm.submit();
+            }
+        }, 1200);
+    } catch (err) {
+        showBlockchainLoading(false);
+        showBlockchainNotify('Giao dịch thất bại: ' + err.message, 'error');
+    }
+}
+
+function getDiscount() {
+    var couponInput = document.getElementById("couponInput");
+    var couponValue = couponInput.value;
+    var code = couponValue;
+
+    $.ajax({
+        url: '/Order/GetDiscount',
+        type: 'GET',
+        data: { ma: code },
+        success: function (data) {
+            if (data) {
+                $('#thongbao').text('ÁP MÃ THÀNH CÔNG').css({
+                    'color': 'green',
+                    'font-weight': 'bold'
+                });
+
+                var shippingFeeElement = document.getElementById('shippingFee');
+                var magiamgia = document.getElementById('giamgia');
+                var tongTienElement = document.getElementById('tongtien').value;
+                var selectedShipperValue = document.getElementById('shipperSelect').value;
+                var total = document.getElementById('thanhtoan');
+
+                var tongTienValue = parseFloat(tongTienElement);
+                var giamgia = data.discountPercent;
+                var shippingFee = (selectedShipperValue === '1') ? 30000 : 45000;
+
+                shippingFeeElement.innerText = formatCurrency(shippingFee) + ' VNĐ';
+                shippingFeeElement.setAttribute('value', shippingFee);
+                magiamgia.setAttribute('value', giamgia);
+
+                var thanhtoan = tongTienValue - giamgia + shippingFee;
+
+                $('#giamgia').text(formatCurrency(data.discountPercent) + ' VNĐ');
+                $('#thanhtoan').text(formatCurrency(thanhtoan) + ' VNĐ');
+                updateBlockchainVndAmount();
+            } else {
+                $('#thongbao').text('Mã giảm giá không tồn tại').css({
+                    'color': 'red',
+                    'font-weight': 'bold'
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+};
+
+function MoModal() {
+    $('#myModal').modal('show');
+};
+function DongModal() {
+    $('#myModal').modal('hide');
+};
+document.getElementById('shipperSelect').addEventListener('change', function () {
+    var shippingFeeElement = document.getElementById('shippingFee');
+    var tongTienElement = document.getElementById('tongtien').value;
+    var giamgiaElement = document.getElementById('giamgia');
+    var selectedShipperValue = this.value;
+    var total = document.getElementById('thanhtoan');
+
+    // Chuyển đổi giá trị của tongTienElement từ chuỗi sang số
+    var tongTienValue = parseFloat(tongTienElement);
+
+    // Lấy giá trị của giảm giá từ thuộc tính value của phần tử h5
+    var giamgiaValue = parseFloat(giamgiaElement.getAttribute('value'));
+
+    // Cập nhật giá trị phí vận chuyển dựa trên lựa chọn
+    var shippingFee = (selectedShipperValue === '1') ? 30000 : 45000;
+
+    // Cập nhật thuộc tính khác thay vì value
+    shippingFeeElement.setAttribute('value', shippingFee);
+
+    // Cập nhật text hiển thị
+    shippingFeeElement.innerText = formatCurrency(shippingFee) + ' VNĐ';
+
+    // Cập nhật giá trị ẩn
+    var tongtien = tongTienValue + shippingFee - giamgiaValue;
+    total.innerText = formatCurrency(tongtien) + ' VNĐ';
+
+    updateBlockchainVndAmount();
+});
+
+function updateBlockchainVndAmount() {
+    if (document.getElementById('payMethod').value == "3") {
+        const thanhtoanText = document.getElementById('thanhtoan').innerText;
+        const vnd = parseInt(thanhtoanText.replace(/[^\d]/g, ''));
+        document.getElementById('vndAmount').value = vnd;
+        latestEthRate = null;
+        updateEthEquivalent();
+    }
+}
+
+// Hàm định dạng số tiền thành chuỗi có dấu phẩy
+function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 </script>

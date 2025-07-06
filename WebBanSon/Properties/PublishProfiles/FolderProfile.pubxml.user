@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\SV\Downloads\8080</_PublishTargetUrl>
+    <History>True|2024-08-10T09:47:34.0935296Z;False|2024-08-10T16:47:18.1434956+07:00;True|2024-08-10T16:21:08.7038910+07:00;False|2024-08-10T16:20:47.7022543+07:00;True|2024-08-10T16:07:50.4172371+07:00;False|2024-08-10T16:07:36.2884131+07:00;True|2024-08-10T15:45:04.1408003+07:00;False|2024-08-10T15:44:50.3676565+07:00;True|2024-08-10T12:56:45.8590033+07:00;False|2024-08-10T12:56:26.3131622+07:00;True|2024-08-10T12:32:56.8999149+07:00;False|2024-08-10T12:32:38.9726551+07:00;True|2024-08-10T12:07:26.4660093+07:00;False|2024-08-10T12:06:57.7484822+07:00;True|2024-08-10T12:05:53.9533544+07:00;True|2024-08-10T12:00:35.1314041+07:00;True|2024-08-09T23:08:45.2618005+07:00;True|2024-08-09T23:06:51.3866543+07:00;</History>
+    <LastFailureDetails />
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="WebMyPham">
+      <Value>Server=DESKTOP-VC92P42\SQLEXPRESS%3bDatabase=WebMyPham%3bUser Id=khang%3bPassword=12345qwertA%40%3bMultipleActiveResultSets=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

@@ -124,24 +124,15 @@ namespace WebBanSon.Areas.Admin.Controllers
         }
         public string ConvertToSlug(string? title)
         {
-            // Chuyển đổi chuỗi sang không dấu
             string slug = title.Unidecode();
 
-            // Xóa các ký tự không phải chữ cái, số, hoặc dấu gạch ngang
             slug = Regex.Replace(slug, @"[^a-zA-Z0-9\s-]", "");
-
-            // Thay thế khoảng trắng bằng dấu gạch ngang
             slug = slug.Replace(" ", "-").Trim();
-
-            // Xóa các dấu gạch ngang liên tiếp
             slug = Regex.Replace(slug, @"-+", "-");
-
-            // Xóa dấu gạch ngang ở đầu và cuối chuỗi
             slug = slug.Trim('-');
 
             return slug;
         }
-        // GET: Admin/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)

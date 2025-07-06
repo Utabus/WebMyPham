@@ -2591,6 +2591,35 @@
           }
         }
       },
+      "Serilog/4.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Serilog.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Serilog.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Serilog.Sinks.File/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "4.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Serilog.Sinks.File.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Serilog.Sinks.File.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "SixLabors.Fonts/1.0.0": {
         "type": "package",
         "compile": {
@@ -7934,6 +7963,52 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
+    "Serilog/4.0.0": {
+      "sha512": "2jDkUrSh5EofOp7Lx5Zgy0EB+7hXjjxE2ktTb1WVQmU00lDACR2TdROGKU0K1pDTBSJBN1PqgYpgOZF8mL7NJw==",
+      "type": "package",
+      "path": "serilog/4.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net462/Serilog.dll",
+        "lib/net462/Serilog.xml",
+        "lib/net471/Serilog.dll",
+        "lib/net471/Serilog.xml",
+        "lib/net6.0/Serilog.dll",
+        "lib/net6.0/Serilog.xml",
+        "lib/net8.0/Serilog.dll",
+        "lib/net8.0/Serilog.xml",
+        "lib/netstandard2.0/Serilog.dll",
+        "lib/netstandard2.0/Serilog.xml",
+        "serilog.4.0.0.nupkg.sha512",
+        "serilog.nuspec"
+      ]
+    },
+    "Serilog.Sinks.File/6.0.0": {
+      "sha512": "lxjg89Y8gJMmFxVkbZ+qDgjl+T4yC5F7WSLTvA+5q0R04tfKVLRL/EHpYoJ/MEQd2EeCKDuylBIVnAYMotmh2A==",
+      "type": "package",
+      "path": "serilog.sinks.file/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net462/Serilog.Sinks.File.dll",
+        "lib/net462/Serilog.Sinks.File.xml",
+        "lib/net471/Serilog.Sinks.File.dll",
+        "lib/net471/Serilog.Sinks.File.xml",
+        "lib/net6.0/Serilog.Sinks.File.dll",
+        "lib/net6.0/Serilog.Sinks.File.xml",
+        "lib/net8.0/Serilog.Sinks.File.dll",
+        "lib/net8.0/Serilog.Sinks.File.xml",
+        "lib/netstandard2.0/Serilog.Sinks.File.dll",
+        "lib/netstandard2.0/Serilog.Sinks.File.xml",
+        "serilog-sink-nuget.png",
+        "serilog.sinks.file.6.0.0.nupkg.sha512",
+        "serilog.sinks.file.nuspec"
+      ]
+    },
     "SixLabors.Fonts/1.0.0": {
       "sha512": "LFQsCZlV0xlUyXAOMUo5kkSl+8zAQXXbbdwWchtk0B4o7zotZhQsQOcJUELGHdfPfm/xDAsz6hONAuV25bJaAg==",
       "type": "package",
@@ -11867,6 +11942,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.18",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.16",
       "NETCore.MailKit >= 2.1.0",
+      "Serilog.Sinks.File >= 6.0.0",
       "UnidecodeSharpFork >= 1.0.0"
     ]
   },
@@ -11877,11 +11953,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SV\\Desktop\\DuAnCaNhan\\code thue\\Gitcode\\WebMyPham\\WebBanSon\\WebBanSon.csproj",
+      "projectUniqueName": "F:\\DuAnCaNhan\\code thue\\WebBanSon\\WebBanSon\\WebBanSon.csproj",
       "projectName": "WebBanSon",
-      "projectPath": "C:\\Users\\SV\\Desktop\\DuAnCaNhan\\code thue\\Gitcode\\WebMyPham\\WebBanSon\\WebBanSon.csproj",
+      "projectPath": "F:\\DuAnCaNhan\\code thue\\WebBanSon\\WebBanSon\\WebBanSon.csproj",
       "packagesPath": "C:\\Users\\SV\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SV\\Desktop\\DuAnCaNhan\\code thue\\Gitcode\\WebMyPham\\WebBanSon\\obj\\",
+      "outputPath": "F:\\DuAnCaNhan\\code thue\\WebBanSon\\WebBanSon\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -11952,6 +12028,10 @@
             "target": "Package",
             "version": "[2.1.0, )"
           },
+          "Serilog.Sinks.File": {
+            "target": "Package",
+            "version": "[6.0.0, )"
+          },
           "UnidecodeSharpFork": {
             "target": "Package",
             "version": "[1.0.0, )"
@@ -11968,6 +12048,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.26, 6.0.26]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -11976,7 +12074,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   },

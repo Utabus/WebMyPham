@@ -16,6 +16,10 @@
     <WebStackScaffolding_DbContextTypeFullName>WebBanSon.Models.WebMyPhamContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
-    <NameOfLastUsedPublishProfile>C:\Users\SV\Desktop\DuAnCaNhan\code thue\WebBanSon\WebBanSon\Properties\PublishProfiles\webaspnetcore-001-site1 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>F:\DuAnCaNhan\code thue\WebBanSon\WebBanSon\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
+    <ActiveDebugProfile>WebBanSon</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

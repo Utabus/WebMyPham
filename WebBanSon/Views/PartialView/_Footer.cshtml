@@ -19,177 +19,185 @@
 }
 
 <style>
-    .floating-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: limegreen; /* Màu xanh */
-        color: #fff; /* Màu chữ trắng */
-        border: none;
-        border-radius: 100%;
-        padding: 15px;
-        cursor: pointer;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000; /* Đặt z-index cao để nút nổi lên trên các đối tượng khác */
-        outline: none; /* Loại bỏ đường viền khi được focus */
-    }
-
-        .floating-button.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0); /* Ẩn bằng cách thu nhỏ */
-        }
-
-
-        .floating-button i {
-            font-size: 1.5rem; /* Kích thước của biểu tượng */
-        }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f8f8f8;
-    }
-
     #chat-container {
-        width: 300px;
-        height: 400px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
+        width: 350px;
+        height: 500px;
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         display: none;
-        background-color: #ddd;
+        background: #f8fafc;
+        border: none;
+        z-index: 1001;
+        transition: box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
     }
-
+    #chat-container:focus-within {
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+    }
     #chat-header {
-        background-color: #4CAF50;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
         color: white;
-        padding: 15px;
-        text-align: center;
+        padding: 14px 18px;
+        font-size: 17px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .admin-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(33,147,176,0.12);
+    }
+    .admin-name {
+        font-weight: 500;
         font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        position: relative;
     }
-
     #close-button {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%);
-        cursor: pointer;
+        background: none;
+        border: none;
         color: white;
+        font-size: 22px;
+        cursor: pointer;
+        transition: color 0.2s;
+    } 
+    #close-button:hover {
+        color: #f44336;
     }
-
     #chat-messages {
-        padding: 15px;
-        max-height: 300px;
+        flex: 1;
+        padding: 18px 14px 10px 14px;
+        max-height: 340px;
         overflow-y: auto;
         display: flex;
-        flex-direction: column; /* Thay đổi hướng của flex container thành từ trên xuống */
+        flex-direction: column;
+        gap: 10px;
+        background: none;
     }
-
     .message {
         display: flex;
-        align-items: flex-start;
-        margin-bottom: 10px;
+        align-items: flex-end;
+        gap: 10px;
+        margin-bottom: 0;
     }
-
-    .user-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }   .user-avatar img {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-
-    .user1 .user-avatar {
-        background-color: #4CAF50;
-    }
-
-    .user2 .user-avatar {
-        background-color: gold;
-    }
-
     .user1 {
         justify-content: flex-end;
     }
-
-    .message-content {
-        padding: 8px;
-        border-radius: 5px;
-        max-width: 70%;
-        background-color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        word-wrap: break-word;
+    .user2 {
+        justify-content: flex-start;
     }
-
-    .user1 .message-content {
-        background-color: #4CAF50;
-        color: white;
-        align-self: flex-end;
-        margin-right: 10px;
-    }
-
-    .user2 .message-content {
-        background-color: #f9f9f9;
-        color: #333;
-        align-self: flex-start;
-    }
-
-    #chat-input {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #e3f2fd;
         display: flex;
         align-items: center;
-        padding: 10px;
-        border-top: 1px solid #ddd;
-        background-color: #f9f9f9;
+        justify-content: center;
     }
-
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .message-content {
+        padding: 10px 16px;
+        border-radius: 18px;
+        max-width: 70%;
+        font-size: 15px;
+        background: #e3f2fd;
+        color: #222;
+        box-shadow: 0 1px 4px rgba(33,147,176,0.08);
+        word-break: break-word;
+        transition: background 0.2s;
+    }
+    .user1 .message-content {
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+        color: #fff;
+        align-self: flex-end;
+    }
+    .user2 .message-content {
+        background: #f1f1f1;
+        color: #222;
+        align-self: flex-start;
+    }
+    #chat-input {
+        display: flex;
+        align-items: center;
+        padding: 14px 12px;
+        border-top: 1px solid #e0e0e0;
+        background: #fff;
+        gap: 10px;
+    }
     #user-input {
         flex: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-right: 10px;
+        padding: 10px 14px;
+        border: 1px solid #b3e0fc;
+        border-radius: 16px;
         outline: none;
+        font-size: 15px;
+        background: #f8fafc;
+        transition: border 0.2s;
     }
-
+    #user-input:focus {
+        border: 1.5px solid #2193b0;
+    }
     #send-button {
-        background-color: #4CAF50;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
         color: white;
-        padding: 8px;
         border: none;
-        border-radius: 5px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
         cursor: pointer;
+        box-shadow: 0 2px 8px rgba(33,147,176,0.12);
+        transition: background 0.2s;
     }
-
+    #send-button:hover {
+        background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+    }
     #toggle-button {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: limegreen; /* Màu xanh */
-        color: #fff; /* Màu chữ trắng */
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+        color: #fff;
         border: none;
-        border-radius: 100%;
-        padding: 15px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
         cursor: pointer;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 1000; /* Đặt z-index cao để nút nổi lên trên các đối tượng khác */
-        outline: none; /* Loại bỏ đường viền khi được focus */
-        display: block;
+        box-shadow: 0 4px 16px rgba(33,147,176,0.18);
+        z-index: 1002;
+        outline: none;
+        transition: background 0.2s;
+    }
+    #toggle-button:hover {
+        background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
     }
 </style>
 <!-- Footer Start -->
@@ -243,30 +251,22 @@
     </button>
     <div id="chat-container">
         <div id="chat-header">
-            Chat Interface
+            <div class="header-left">
+                <img src="@AvatarAdmin" class="admin-avatar" />
+                <span class="admin-name">Admin</span>
+            </div>
             <span id="close-button" onclick="toggleChat()">✖</span>
         </div>
-        <div id="chat-messages">
-            <div style="" class="message user1">
-
-                <div class="message-content">Hello there!</div>
-                <div class="user-avatar"><img src="@Avartar" /></div>
-            </div>
-            <div style="" class="message user2">
-
-                <div class="user-avatar"></div>
-                <div class="message-content">Hi! How can I help you?</div>
-            </div>
-
-        </div>
+        <div id="chat-messages"></div>
         <div id="chat-input">
             <input id="avatar" type="hidden" value="@Avartar" />
             <input id="Id" type="hidden" value="@Id" />
-
             <input id="IdAdmin" type="hidden" value="1" />
             <input id="avatarAdmin" type="hidden" value="@AvatarAdmin" />
-            <input type="text" id="user-input" placeholder="Nhập tin nhắn">
-            <button id="send-button" onclick="sendMessage()">Send</button>
+            <input type="text" id="user-input" placeholder="Nhập tin nhắn...">
+            <button id="send-button" onclick="sendMessage()">
+               <i class="fas fa-paper-plane"></i>
+            </button>
             <input type="hidden" id="nameUser" value="@UserName" />
         </div>
     </div>
@@ -296,7 +296,6 @@
             if (message.fromId == user1) {
                 messageDiv.addClass('user1');
                 messageDiv.append(
-                    
                     $('<div>', { class: 'message-content', text: message.messages }),
                     $('<div>', { class: 'user-avatar' }).append($('<img>', { src: avatarValue }))
                 );
@@ -310,6 +309,9 @@
 
             chatMessagesContainer.append(messageDiv);
         });
+
+        // Cuộn xuống cuối cùng
+        chatMessagesContainer.scrollTop(chatMessagesContainer[0].scrollHeight);
     }
 
 
@@ -345,6 +347,12 @@
             }
         });
     }  
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ẩn khung chat, hiện nút toggle khi vừa load trang
+        document.getElementById('chat-container').style.display = 'none';
+        document.getElementById('toggle-button').style.display = 'block';
+    });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.9/signalr.min.js"></script>
 <script src="~/js/chat.js"></script>

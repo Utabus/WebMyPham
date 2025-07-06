@@ -6,6 +6,11 @@ namespace SR.Hubs
 {
     public class ChatHub : Hub
     {
+        private readonly WebMyPhamContext _context;
+        public ChatHub(WebMyPhamContext context)
+        {
+            _context = context;
+        }
         public async Task SendMessage(MessageModel messageModel)
         {
             await Clients.All.SendAsync("ReceiveMessage", messageModel);
@@ -27,6 +32,10 @@ namespace SR.Hubs
         {
             await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
             await base.OnDisconnectedAsync(ex);
+        }
+        public string ConnectionId() {
+            return "";
+
         }
     }
 }

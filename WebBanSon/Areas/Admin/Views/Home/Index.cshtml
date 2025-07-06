@@ -16,78 +16,117 @@
         </span> Dashboard
     </h3>
 </div>
-<div class="row">
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-danger card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                    Tổng Doanh Thu <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                </h4>
-                <h2 class="mb-5">@string.Format("{0:N0}", DoanhThu) VNĐ</h2>
-                <h6 class="card-text">Tăng 60%</h6>
+
+<!-- AI Chat UI Start -->
+<div class="row justify-content-center mt-4">
+    <div class="col-12 d-flex justify-content-center">
+        <div class="ai-gpt-chatbox shadow-lg">
+            <div class="ai-gpt-header text-center py-4 border-bottom">
+                <span class="fw-bold" style="font-size: 1.5rem; letter-spacing: 0.5px;">Truy vấn dữ liệu</span>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-info card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                   Tổng Đơn Hàng <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                </h4>
-                <h2 class="mb-5">@TongDonHang</h2>
-                <h6 class="card-text">Giảm 10%</h6>
+            <div class="ai-gpt-body px-0 py-4">
+                <div id="ai-chat-messages" class="ai-gpt-messages"></div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-success card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                    Đơn Hàng Hủy <i class="mdi mdi-diamond mdi-24px float-right"></i>
-                </h4>
-                <h2 class="mb-5">@DonHuy</h2>
-                <h6 class="card-text">Giảm 5%</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-primary  card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                    Số Lượng Khách Hàng <i class="mdi mdi-account menu-icon"></i>
-                </h4>
-                <h2 class="mb-5">@user</h2>
-                <h6 class="card-text">Tăng 5%</h6>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-warning  card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                    Số Lượng Mã Giảm Giá <i class="mdi mdi-ticket-percent menu-icon"></i>
-                </h4>
-                <h2 class="mb-5">@MaGiamGia</h2>
-                <h6 class="card-text">Tăng 0%</h6>
-            </div>
-        </div>
-    </div> 
-    <div class="col-md-4 stretch-card grid-margin">
-        <div class="card bg-gradient-dark   card-img-holder text-white">
-            <div class="card-body">
-                <img src="~/LayoutAdmin/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">
-                    Số Lượng Sản Phẩm <i class="mdi mdi-package-variant menu-icon"></i>
-                </h4>
-                <h2 class="mb-5">@Sanpham</h2>
-                <h6 class="card-text">Tăng 0%</h6>
+            <div class="ai-gpt-footer px-4 py-3">
+                <form class="d-flex align-items-center gap-2 w-100" onsubmit="event.preventDefault(); document.getElementById('ai-chat-send').click();">
+                    <input type="text" id="ai-chat-input" class="form-control ai-gpt-input flex-grow-1" placeholder="Nhập câu hỏi hoặc tin nhắn..." aria-label="Nhập tin nhắn" autocomplete="off">
+                    <button class="btn ai-gpt-send-btn d-flex align-items-center justify-content-center" id="ai-chat-send" type="button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- DASHBOARD HEADER START -->
+<div class="dashboard-header text-center mb-5 mt-4">
+    <h1 class="fw-bold mb-2" style="font-size:2.3rem; letter-spacing:0.5px;">Dashboard</h1>
+    <div class="text-muted" style="font-size:1.15rem;">Tổng quan hệ thống quản lý</div>
+</div>
+<!-- DASHBOARD HEADER END -->
+
+<!-- DASHBOARD CARDS START -->
+<div class="row g-4 justify-content-center">
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="dashboard-card gradient-1 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-chart-line"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Tổng Doanh Thu</div>
+                <div class="dashboard-value">@string.Format("{0:N0}", DoanhThu) <span class="dashboard-unit"></span></div>
+                <div class="dashboard-trend up"><i class="fas fa-arrow-up"></i> +60%</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="dashboard-card gradient-2 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-bookmark-outline"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Tổng Đơn Hàng</div>
+                <div class="dashboard-value">@TongDonHang</div>
+                <div class="dashboard-trend down"><i class="fas fa-arrow-down"></i> -10%</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="dashboard-card gradient-3 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-diamond"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Đơn Hàng Hủy</div>
+                <div class="dashboard-value">@DonHuy</div>
+                <div class="dashboard-trend down"><i class="fas fa-arrow-down"></i> -5%</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3">
+        <div class="dashboard-card gradient-4 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-account"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Số Lượng Khách Hàng</div>
+                <div class="dashboard-value">@user</div>
+                <div class="dashboard-trend up"><i class="fas fa-arrow-up"></i> +5%</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row g-4 justify-content-center mt-1">
+    <div class="col-12 col-md-6">
+        <div class="dashboard-card gradient-5 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-ticket-percent"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Số Lượng Mã Giảm Giá</div>
+                <div class="dashboard-value">@MaGiamGia</div>
+                <div class="dashboard-trend up"><i class="fas fa-arrow-up"></i> +0%</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="dashboard-card gradient-6 d-flex align-items-center p-4">
+            <div class="dashboard-icon me-3"><i class="mdi mdi-package-variant"></i></div>
+            <div class="flex-grow-1 text-end">
+                <div class="dashboard-label">Số Lượng Sản Phẩm</div>
+                <div class="dashboard-value">@Sanpham</div>
+                <div class="dashboard-trend up"><i class="fas fa-arrow-up"></i> +0%</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- DASHBOARD CARDS END -->
+
+<!-- DASHBOARD CHART PLACEHOLDER START -->
+<div class="row justify-content-center mt-5 mb-4">
+    <div class="col-12 col-lg-10">
+        <div class="dashboard-chart-placeholder p-5 text-center bg-white rounded-4 shadow-sm border">
+            <div class="text-muted mb-2" style="font-size:1.2rem;">Biểu đồ doanh thu & đơn hàng (coming soon)</div>
+            <i class="fas fa-chart-bar fa-3x text-secondary"></i>
+        </div>
+    </div>
+</div>
+<!-- DASHBOARD CHART PLACEHOLDER END -->
+
+<!-- AI Chat UI End -->
+
+@section scripts {
+    <script src="~/js/site.js"></script>
+}
+    <link rel="stylesheet" href="~/css/site.css">
